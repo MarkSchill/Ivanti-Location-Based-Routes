@@ -1,0 +1,21 @@
+{
+  "name": "ivanti-location-based-routes",
+  "version": "1.0.0",
+  "description": "Script to create an Ivanti import sheet to quickly create location based routes for a given set of services, categories, and subcategories",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Ivanti",
+    "ITSM",
+    "Location Based Routes",
+    "LBR"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "exceljs": "^4.4.0"
+  }
+}
