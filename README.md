@@ -13,36 +13,34 @@ In order to use this script you will need to generate a configuration file calle
 
 ```json
 {
+	"company": "<Company name>",
+	"categorization":
 	{
-		"company": "<Company name>",
-		"categorization":
-		{
-			"<Categories>": {
-				"<Services>": [
-					"<Symptoms>"
-				]
-			}
-		},
+		"<Categories>": {
+			"<Services>": [
+				"<Symptoms>"
+			]
+		}
+	},
 
-		"maps": [
-			{
-				"company": "<Company name>",
-				"map": [
-					{
-						"name": "Site 1",
-						"group": "Site 1 Desktop Support"
-					},
-					{
-						"name": "Site 2",
-						"group": "Site 2 Desktop Support"
-					},
-					{
-						"name": "Site 3",
-						"group": "Remote Desktop Support"
-					}
-				]
-			}
-		]
-	}
+	"maps": [
+		{
+			"company": "<Company name>",
+			"map": [
+				{
+					"name": "Site 1",
+					"group": "Site 1 Desktop Support"
+				},
+				{
+					"name": "Site 2",
+					"group": "Site 2 Desktop Support"
+				},
+				{
+					"name": "Site 3",
+					"group": "Remote Desktop Support"
+				}
+			]
+		}
+	]
 }
 ```
