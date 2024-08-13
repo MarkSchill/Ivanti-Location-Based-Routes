@@ -9,7 +9,7 @@
 
 In order to use this script you will need to generate a configuration file called config.json.  In this script you will define the assignment maps that are being used per location which will allow the dynamic generation of the import sheet.  Please see the example config file below:
 
-####JSON Config
+#### JSON Config
 
 ```json
 {
