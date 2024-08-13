@@ -1,61 +1,41 @@
+const fs = require('node:fs');
 const excel = require('exceljs');
 
-const COMPANY = 'Test Company';
-const LOCATIONS = ['Location 1', 'Location 2', 'Location 3'];
-const CATEGORIZATION = {
-    'Service 1': {
-        'Category 1': [
-            'Subcategory 1',
-            'Subcategory 2',
-        ],
-        'Category 2': [
-            'Subcategory 1',
-            'Subcategory 2',
-        ],
-    },
-    'Service 2': {
-        'Category 1': [
-            'Subcategory 1',
-            'Subcategory 2',
-        ],
-        'Category 2': [
-            'Subcategory 1',
-            'Subcategory 2',
-        ],
-    },
-    'Service 3': {
-        'Category 1': [
-            'Subcategory 1',
-            'Subcategory 2',
-        ],
-        'Category 2': [
-            'Subcategory 1',
-            'Subcategory 2',
-        ],
-    },
-};
-
+let config;
+let map;
 
 let routes = [];
 
-for (let location of LOCATIONS) {
-    for (let service in CATEGORIZATION) {
-        for (let category in CATEGORIZATION[service]) {
-            for (let subcategory of CATEGORIZATION[service][category]) {
+try {
+    let data = fs.readFileSync('./config.json', { encoding: 'utf-8' })
+    config = JSON.parse(data);
+    
+    map = config.maps.find((obj) => obj.company == config.company);
+    if (map === undefined) {
+        throw new Error(`Cannot locate the map for company ${config.company}`);
+    }
+} catch (error) {
+    console.error(error);
+    process.exit();
+}
+
+for (let location of map.map) {
+    for (let service in config.categorization) {
+        for (let category in config.categorization[service]) {
+            for (let subcategory of config.categorization[service][category]) {
                 routes.push({
-                    company: COMPANY,
+                    company: config.company,
                     parent: 'SubCategory',
-                    location: location,
+                    location: location.name,
                     service: service,
                     category: category,
                     subcategory: subcategory,
-                    group_bh: `${COMPANY} - ${location} - Desktop Services`,
-                    group_ah: `${COMPANY} - ${location} - Desktop Services`,
+                    group_bh: location.group,
+                    group_ah: location.group,
                 });
             }
         }
     }
-
 }
 
 const book = new excel.Workbook();
@@ -76,7 +56,8 @@ for (let route of routes) {
     sheet.addRow(route);
 }
 
-const FILENAME = `${COMPANY}_LBR.xlsx`;
+const date = new Date();
+const FILENAME = `./output/${config.company}_${date.toDateString()}_LBR.xlsx`;
 try {
     book.xlsx.writeFile(FILENAME);
 } catch (err) {
